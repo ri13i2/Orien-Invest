@@ -36,12 +36,9 @@ async def forward_to_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     application = ApplicationBuilder().token(TOKEN).build()
-
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), forward_to_admin))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, forward_to_admin))
+    application.run_polling()  # ✅ asyncio 없이 직접 실행
 
-    # asyncio.run() 사용하지 않음
-    application.run_polling()
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
